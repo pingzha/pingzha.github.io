@@ -35,3 +35,10 @@ twitter:
 google_plus:
 fb_admins:
 fb_app_id:
+
+local_search:
+  enable: true
+  trigger: auto
+  top_n_per_article: 1
+  unescape: false
+
