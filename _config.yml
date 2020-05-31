@@ -3,9 +3,9 @@
 ## Source: https://github.com/hexojs/hexo/
 
 # Site
-title: '记录'
+title: 'pingzha的家'
 subtitle: ''
-description: 'test'
+description: '工作与生活'
 keywords:
 author: pingzha
 language: en
@@ -93,7 +93,7 @@ ignore:
 # Extensions
 ## Plugins: https://hexo.io/plugins/
 ## Themes: https://hexo.io/themes/
-theme: yilia
+theme: landscape
 
 # Deployment
 ## Docs: https://hexo.io/docs/deployment.html
