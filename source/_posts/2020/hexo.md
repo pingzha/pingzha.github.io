@@ -33,3 +33,14 @@ local_search:
   enable: true
 
 
+使用命令发布博客 
+hexo new post xxx
+
+使用批处理脚本auto.sh上传git保存
+git add --all .
+git commit -m "add blog"
+git push
+
+hexo g -d
+exit
+
