@@ -19,5 +19,7 @@ verysync --gui-address :8886
 打开浏览器
 http://pingzha.xyz:8886
 进入选型->界面，进行用户名密码设置
+例如
+admin/123
 
 然后就可以设置同步目录，或从他人那同步目录
