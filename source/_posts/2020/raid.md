@@ -63,3 +63,12 @@ mdadm --grow /dev/md0 --add /dev/sda9 --level=5
       raid6->raid5
       raid1->raid5
       raid5->raid1
+
+
+----------------
+发现存储：iscsiadm -m discovery -t st -p xxIP
+查看发现记录： iscsiadm -m node
+删除发现记录： iscsiadm -m node -o delete -T LUN_NAME -p xxIP
+登录存储：iscsiadm -m node -T LUN_NAME -p xxIP -l
+登出存储：iscsiadm -m node -T LUN_NAME -p xxIP -u
+          iscsiadm -m node -U all
