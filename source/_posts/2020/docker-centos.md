@@ -10,7 +10,8 @@ docker login
 docker pull docker.io/simonpeng/centos:latest
 
 #/opt/start.sh
-docker run -itd --hostname=docker_cloud --net=host --privileged --name=test -v/opt:/opt docker.io/simonpeng/centos supervisord -n -c /etc/supervisord.conf
+docker run -itd --hostname=docker_cloud --net=host --privileged --name=test -v/opt:/opt docker.io/simonpeng/centos 
+supervisord -n -c /etc/supervisord.conf
 
 #telnet 127.0.0.1
 
