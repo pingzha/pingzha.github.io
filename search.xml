@@ -1,0 +1,202 @@
+<?xml version="1.0" encoding="utf-8"?>
+<search>
+  <entry>
+    <title>cython</title>
+    <url>/2020/06/17/cython/</url>
+    <content><![CDATA[<p>编写 setup.py 编译脚本</p>
+<p>from distutils.core import setup<br>from Cython.Build import cythonize<br>import commands</p>
+<p>cmd = “rm -f ./*.so;rm -rf build;rm -rf ./lib_modules”<br>(ret,out) = commands.getstatusoutput(cmd)</p>
+<p>filelist = [“TaskReblance.py”, “test.py”]<br>setup(<br>  name=”middleware”,<br>  ext_modules=cythonize(filelist)<br>)<br>result_path = “./lib_modules/aaa”<br>cmd = “mkdir -p %s;mv *.so %s” % (result_path, result_path)<br>(ret,out)=commands.getstatusoutput(cmd)</p>
+<p>执行编译命令<br>python setup.py build ext –inplace</p>
+<p>测试验证 test.py</p>
+<p>import commands<br>(ret,out)=commands.getstatusoutput(“cd /tmp/“)<br>import TaskReblance</p>
+<p>TaskReblance.main()<br>或直接使用命令：<br>python -m TaskReblance.so</p>
+<p>通过cython产生自带main函数的空壳函数<br>cython test.py –embed<br>产生的test.c文件通过gcc编译：<br>gcc -O3 test.c -l/usr/include/python2.7 -lpython2.7<br>得到可执行文件a.out，将so库和a.out文件放入同一个文件夹中即可</p>
+<p>另外用cython代替ctypes功能示意<br>写一个c功能函数（去掉main函数），通过gcc编译成库后，可以被ctypes直接调用，但还是麻烦，考虑使用cython，增加如下：<br>cdef extern from “fib.c”:<br>  int fib(int)</p>
+<p>def fibf(n):<br>  return fib(n)</p>
+<p>保存为fibf.pyx文件，然后<br>cython fibf.pyx (做调用检查，产生fibf.c文件)</p>
+<p>gcc fibf.c -shared -fPIC -l/usr/include/python2.7 -lpython2.7 -o fibf.so -O3<br>编译出一个so文件，然后可以直接使用python的import进行导入后使用</p>
+]]></content>
+      <categories>
+        <category>work</category>
+      </categories>
+      <tags>
+        <tag>cython ctypes</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>docker_centos</title>
+    <url>/2020/05/31/docker_centos/</url>
+    <content><![CDATA[<p>docker login<br>docker pull docker.io/simonpeng/centos:latest</p>
+<p>#/opt/start.sh<br>docker run -itd –hostname=docker_cloud –net=host –privileged –name=test -v/opt:/opt docker.io/simonpeng/centos<br>supervisord -n -c /etc/supervisord.conf</p>
+<p>#telnet 127.0.0.1</p>
+<p>docker commit test<br>docker push docker.io/simonpeng/centos:latest</p>
+<p>docker save test &gt; test.tar<br>docker load &lt; test.tar</p>
+]]></content>
+      <categories>
+        <category>work</category>
+      </categories>
+      <tags>
+        <tag>docker</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>docker-pan</title>
+    <url>/2020/06/03/docker-pan/</url>
+    <content><![CDATA[<p>[root@VM_0_11_centos ~]# cat /etc/docker/daemon.json<br>{<br>“registry-mirrors”: [<br>“<a href="https://mirror.ccs.tencentyun.com&quot;" target="_blank" rel="noopener">https://mirror.ccs.tencentyun.com&quot;</a>,<br>“<a href="https://registry.docker-cn.com&quot;" target="_blank" rel="noopener">https://registry.docker-cn.com&quot;</a>,<br>“<a href="https://docker.mirrors.ustc.edu.cn&quot;" target="_blank" rel="noopener">https://docker.mirrors.ustc.edu.cn&quot;</a>,<br>“<a href="http://hub-mirror.c.163.com&quot;" target="_blank" rel="noopener">http://hub-mirror.c.163.com&quot;</a>,<br>“<a href="https://cr.console.aliyun.com/&quot;" target="_blank" rel="noopener">https://cr.console.aliyun.com/&quot;</a><br>]<br>}<br>systemctl restart docker</p>
+<p><a href="https://hub.docker.com/r/jaegerdocker/pan/" target="_blank" rel="noopener">https://hub.docker.com/r/jaegerdocker/pan/</a><br>Docker:Filerun+AriaNg+Aria2,Personal cloud disk. </p>
+<p>docker run –name=pan -v /home/pxm/datapan:/var/www/html/system/data/default_home_folder  -dti -p 8081:80 -p 6800:6800 jaegerdocker/pan<br>#冒号”:”前面的目录是宿主机目录，后面的目录是容器内目录。修改宿主机文件夹权限</p>
+<p>Filerun：<a href="http://yourdomain.com:8081" target="_blank" rel="noopener">http://yourdomain.com:8081</a><br>登陆用户名：superuser，登陆密码：superuser。</p>
+<p>AriaNg：<a href="http://yourdomain.com:8081/dweb" target="_blank" rel="noopener">http://yourdomain.com:8081/dweb</a></p>
+]]></content>
+      <categories>
+        <category>work</category>
+      </categories>
+      <tags>
+        <tag>网盘 aria</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>first</title>
+    <url>/2020/05/31/first/</url>
+    <content><![CDATA[<p>Welcome to pingzha’s home.</p>
+]]></content>
+  </entry>
+  <entry>
+    <title>hexo</title>
+    <url>/2020/05/31/hexo/</url>
+    <content><![CDATA[<p>yum -y install git<br>npm install hexo-cli –save<br>npm install hexo-deployer-git –save<br>npm install hexo-generator-searchdb –save</p>
+<p>hexo init web</p>
+<p>#先调整github.io的分支为hexo，不要用master<br>git clone <a href="mailto:git@github.com">git@github.com</a>:pingzha/pingzha.github.io.git<br>#下载完成后再通过界面修改默认分支为master</p>
+<p>#下载next主题，使用Gemini模板<br>git clone <a href="https://github.com/theme-next/hexo-theme-next" target="_blank" rel="noopener">https://github.com/theme-next/hexo-theme-next</a> themes/next</p>
+<p>#_config.yml<br>theme: next<br>search:<br>  path: search.xml<br>  field: post<br>  format: html<br>  limit: 10000</p>
+<p>#theme/next/_config.yml<br>local_search:<br>  enable: true</p>
+<p>使用命令发布博客<br>hexo new post xxx</p>
+<p>使用批处理脚本auto.sh上传git保存<br>git add –all .<br>git commit -m “add blog”<br>git push</p>
+<p>hexo g -d<br>exit</p>
+]]></content>
+      <categories>
+        <category>work</category>
+      </categories>
+      <tags>
+        <tag>hexo build</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>kodexplorer</title>
+    <url>/2020/06/09/kodexplorer/</url>
+    <content><![CDATA[<p>#Dockerfile<br>FROM  centos:7<br>ENV container docker<br>RUN curl -o /etc/yum.repos.d/CentOS-Base.repo <a href="http://mirrors.163.com/.help/CentOS7-Base-163.repo" target="_blank" rel="noopener">http://mirrors.163.com/.help/CentOS7-Base-163.repo</a><br>RUN sed -i ‘s#$releasever#7#g’ /etc/yum.repos.d/CentOS-Base.repo<br>RUN sed -i ‘s#$basearch#x86_64#g’ /etc/yum.repos.d/CentOS-Base.repo<br>RUN curl -o /etc/yum.repos.d/epel.repo <a href="http://mirrors.aliyun.com/repo/epel-7.repo" target="_blank" rel="noopener">http://mirrors.aliyun.com/repo/epel-7.repo</a><br>RUN yum install curl  nginx net-tools php-cli php-fpm unzip php-gd php-mbstring -y<br>RUN sed -i “s#apache#nginx#g”  /etc/php-fpm.d/<a href="http://www.conf" target="_blank" rel="noopener">www.conf</a><br>RUN rm -f /etc/nginx/nginx.conf<br>ADD nginx.conf /etc/nginx/nginx.conf<br>RUN cd /usr/share/nginx/html  &amp;&amp; \curl -o kodexplorer.zip <a href="http://static.kodcloud.com/update/download/kodexplorer4.37.zip" target="_blank" rel="noopener">http://static.kodcloud.com/update/download/kodexplorer4.37.zip</a> &amp;&amp; \unzip kodexplorer.zip</p>
+<p>RUN chown -R nginx:nginx  /usr/share/nginx/html/<br>ADD init.sh /init.sh</p>
+<p>CMD [“/bin/bash”,”/init.sh”]</p>
+<p>#init.sh<br>#!/bin/bash<br>php-fpm -D<br>nginx -g ‘daemon off;’</p>
+<p>#nginx.conf<br>#!/bin/bash<br>php-fpm -D<br>nginx -g ‘daemon off;’<br>[root@VM_0_11_centos kod]# cat nginx.conf<br>worker_processes  5;<br>events {<br>    worker_connections  1024;<br>}<br>http {<br>    include       mime.types;<br>    default_type  application/octet-stream;<br>    sendfile        on;<br>    keepalive_timeout  65;<br>    server {<br>        listen       80;<br>        server_name  localhost;<br>        location / {<br>            root   html;<br>            index index.php index.html index.htm;<br>        }<br>        location ~ .php$ {<br>            root           html;<br>            fastcgi_pass   127.0.0.1:9000;<br>            fastcgi_index  index.php;<br>            fastcgi_param  SCRIPT_FILENAME  $document_root$fastcgi_script_name;<br>            include        fastcgi_params;<br>        }<br>    }<br>}</p>
+<p>################<br>docker build kod -t kod:v1</p>
+<p>docker run –privileged=true -d  -p 8001:80  –name kod  kod:v1</p>
+<p>################<br>将数据文件从容器中存储到磁盘上<br>找到 kodexplorer目录<br>拷贝该目录下的data文件夹到宿主机目录，例如 /home/pxm/kodpan<br>修改配置文件，config/config.php 中，增加定义 DATA_PATH<br>将修改后的容器commit，留作下次使用<br>删除现有kod容器，使用新命令行启动，命令如下：<br>docker run –privileged=true -d -p 8001:80 -v/home/pxm/kodpan:/usr/share/nginx/html/data  –name kod  kod:v1</p>
+<p>打开页面 pingzha.xyz:8001，即可使用</p>
+]]></content>
+      <categories>
+        <category>work</category>
+      </categories>
+      <tags>
+        <tag>kodexplorer edit</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>raid</title>
+    <url>/2020/06/16/raid/</url>
+    <content><![CDATA[<p>LVM2软件版本 2.02.180 Release: 8.e17<br>——命令<br>组raid5<br>yes | mdadm –create /dev/md0 –level=5 –raid-devices=4 /dev/sda{5,6,7,8}<br>查看<br>cat /proc/mdstat<br>格式化<br>mkfs.ext4 /dev/md0<br>查看<br>blkid</p>
+<p>创建pv<br>pvcreate /dev/md0<br>查看<br>pvscan<br>详细信息<br>pvdisplay /dev/md0</p>
+<p>创建vg<br>vgcreate -s 16M vbirdvg /dev/md0<br>查看vg<br>vgscan<br>详细查看<br>vgdisplay vbridvg</p>
+<p>创建LV<br>lvcreate -L 2G -n vbirdlv vbirdvg<br>查看<br>lvscan<br>lvdisplay /dev/vbirdvg/vbirdlv</p>
+<p>扩容/伸缩<br>放大LV<br>lvresize -L +500M /dev/vbirdvg/vbirdlv</p>
+<p>文件系统更新<br>resize2fs /dev/vbirdvg/vbirdlv</p>
+<p>删除过程与创建相反：<br>umount<br>yes | lvremove /dev/vbirdvg/vbirdlv<br>去使能<br>vgchange -a n vbirdvg<br>删除vg<br>vgremove vbirdvg<br>pvremove /dev/md0</p>
+<p>————–迁移raid<br>raid0-&gt;raid5<br>mdadm –create /dev/md0 –level=0 –raid-devices=4 /dev/sda{5,6,7,8}<br>mdadm –grow /dev/md0 –add /dev/sda9 –level=5<br>说明：raid0迁移至raid5需要额外的一个热备盘，<br>      raid5迁移至raid0会踢出一个盘<br>      raid5-&gt;raid6<br>      raid6-&gt;raid5<br>      raid1-&gt;raid5<br>      raid5-&gt;raid1</p>
+<hr>
+<p>发现存储：iscsiadm -m discovery -t st -p xxIP<br>查看发现记录： iscsiadm -m node<br>删除发现记录： iscsiadm -m node -o delete -T LUN_NAME -p xxIP<br>登录存储：iscsiadm -m node -T LUN_NAME -p xxIP -l<br>登出存储：iscsiadm -m node -T LUN_NAME -p xxIP -u<br>          iscsiadm -m node -U all</p>
+]]></content>
+      <categories>
+        <category>work</category>
+      </categories>
+      <tags>
+        <tag>raid lun mdadm</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>ros</title>
+    <url>/2020/06/01/ros/</url>
+    <content><![CDATA[<p>ros镜像 ct2034/vnc-ros-kinetic-full<br>启动命令 docker run -it –rm -p 6080:80 ct2034/vnc-ros-kinetic-full</p>
+<p>novnc 登录</p>
+<ol>
+<li>roscore</li>
+<li>rosrun turtlesim turtlesim_node</li>
+<li>rosrun turtlesim turtle_teleop_key  在打开的窗口移动鼠标即可</li>
+</ol>
+]]></content>
+      <categories>
+        <category>work</category>
+      </categories>
+      <tags>
+        <tag>ros</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>verysync</title>
+    <url>/2020/06/11/verysync/</url>
+    <content><![CDATA[<p>微力同步</p>
+<p>官方网站：<a href="http://www.verysync.com/" target="_blank" rel="noopener">http://www.verysync.com/</a><br>软件下载：<a href="http://verysync.com/download" target="_blank" rel="noopener">http://verysync.com/download</a></p>
+<p>下载可执行程序，放入/usr/bin下即可</p>
+<p>启动：<br>verysync –gui-address :8886</p>
+<p>打开浏览器<br><a href="http://pingzha.xyz:8886" target="_blank" rel="noopener">http://pingzha.xyz:8886</a><br>进入选型-&gt;界面，进行用户名密码设置<br>例如<br>admin/123</p>
+<p>然后就可以设置同步目录，或从他人那同步目录</p>
+]]></content>
+      <categories>
+        <category>work</category>
+      </categories>
+      <tags>
+        <tag>verysync</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>vlc</title>
+    <url>/2020/06/16/vlc/</url>
+    <content><![CDATA[<p>安装 vlc-2.2.6.tar.gz<br>依赖：<br>qt-devel<br>lua-devel<br>gstreamer-devel<br>gstreamer-devel1<br>alsa-lib-devel<br>libgcrypt-devel<br>nasm</p>
+<p>手动安装：<br>libmad-0.15.1b.tar.gz<br>./configure;make;make install<br>ffmpeg-2.7.7.tar.gz<br>./configure –enable-shared;make;make install</p>
+<p>PKG_CONFIG_PATH=/usr/local/lib/pkgconfig/ ./configure –disable-a52 –enable-run-as-root<br>make;make install</p>
+<p>xhost +<br>因为增加了编译选型 –enable-run-as-root，可以使用root用户打开vlc</p>
+<p>使用docker启动软件<br>docker run -v /etc:/etc -v /tmp:/tmp -v /lib:/lib -v /usr:/usr -v /lib64:/lib64 -v/bin:/bin -v/home:/home –privileged -e DISPLAY=unix:0 -e GDK_SCALE -e GDK_DPI_SCALE -e LANG=zh_CN.UTF-8 –name vlc –cpuset-cpus=0-3 –memory-reservation=4G –net=host blank:latest /usr/local/bin/vlc –open file:///home/pxm/Wildlife.wmv</p>
+<p>安装插件 libsrpos_plugin-0.5，可支持播放记录保存功能<br>./configure;make;make install</p>
+<p>考虑可以手动触发记录保存，快捷键 “r”<br>在开源代码中做修改：<br>Open函数中： var_AddCallback( pl_Get(p_intf), “random”, &amp;ItemChange, p_intf);<br>Close函数中：var_DelCallback( pl_Get(p_intf), “random”, &amp;ItemChange, p_intf);<br>新增函数： static void TimeRecord(vlc_object_t *p_this);<br>ItemChange函数中： TimeRecord(p_intf);</p>
+<p>############################################<br>流媒体服务搭建<br>使用nginx-1.9.10编译<br>./configure –add-module=../nginx-rtmp-module</p>
+<p>在nginx.conf中增加配置：<br>rtmp {<br>  server {<br>    listen 1935;<br>    chunk_size 4096;<br>    application live {<br>      live on;<br>      record off;<br>    }<br>  }<br>}</p>
+<p>推流：<br>ffmpeg -re -i /home/pxm/Wildlife.wmv -f flv rtmp://localhost:1935/live/room</p>
+<p>拉流：<br>vlc 启动输入地址： rtmp://localhost:1935/live/room</p>
+]]></content>
+      <categories>
+        <category>work</category>
+      </categories>
+      <tags>
+        <tag>vlc rtmp</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>yum_source</title>
+    <url>/2020/05/31/yum_source/</url>
+    <content><![CDATA[<h1 id="腾讯yum源"><a href="#腾讯yum源" class="headerlink" title="腾讯yum源"></a>腾讯yum源</h1><h2 id="CentOS-Base-repo"><a href="#CentOS-Base-repo" class="headerlink" title="CentOS-Base.repo"></a>CentOS-Base.repo</h2><p>[extras]<br>gpgcheck=1<br>gpgkey=<a href="http://mirrors.tencentyun.com/centos/RPM-GPG-KEY-CentOS-7" target="_blank" rel="noopener">http://mirrors.tencentyun.com/centos/RPM-GPG-KEY-CentOS-7</a><br>enabled=1<br>baseurl=<a href="http://mirrors.tencentyun.com/centos/$releasever/extras/$basearch/" target="_blank" rel="noopener">http://mirrors.tencentyun.com/centos/$releasever/extras/$basearch/</a><br>name=Qcloud centos extras - $basearch<br>[os]<br>gpgcheck=1<br>gpgkey=<a href="http://mirrors.tencentyun.com/centos/RPM-GPG-KEY-CentOS-7" target="_blank" rel="noopener">http://mirrors.tencentyun.com/centos/RPM-GPG-KEY-CentOS-7</a><br>enabled=1<br>baseurl=<a href="http://mirrors.tencentyun.com/centos/$releasever/os/$basearch/" target="_blank" rel="noopener">http://mirrors.tencentyun.com/centos/$releasever/os/$basearch/</a><br>name=Qcloud centos os - $basearch<br>[updates]<br>gpgcheck=1<br>gpgkey=<a href="http://mirrors.tencentyun.com/centos/RPM-GPG-KEY-CentOS-7" target="_blank" rel="noopener">http://mirrors.tencentyun.com/centos/RPM-GPG-KEY-CentOS-7</a><br>enabled=1<br>baseurl=<a href="http://mirrors.tencentyun.com/centos/$releasever/updates/$basearch/" target="_blank" rel="noopener">http://mirrors.tencentyun.com/centos/$releasever/updates/$basearch/</a></p>
+<h2 id="CentOS-Epel-repo"><a href="#CentOS-Epel-repo" class="headerlink" title="CentOS-Epel.repo"></a>CentOS-Epel.repo</h2><p>[epel]<br>name=EPEL for redhat/centos $releasever - $basearch<br>failovermethod=priority<br>gpgcheck=1<br>gpgkey=<a href="http://mirrors.tencentyun.com/epel/RPM-GPG-KEY-EPEL-7" target="_blank" rel="noopener">http://mirrors.tencentyun.com/epel/RPM-GPG-KEY-EPEL-7</a><br>enabled=1<br>baseurl=<a href="http://mirrors.tencentyun.com/epel/$releasever/$basearch/" target="_blank" rel="noopener">http://mirrors.tencentyun.com/epel/$releasever/$basearch/</a></p>
+]]></content>
+      <categories>
+        <category>work</category>
+      </categories>
+      <tags>
+        <tag>yum</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>2021first</title>
+    <url>/2021/03/23/2021first/</url>
+    <content><![CDATA[<p>2021 migrate tencent yun to mobilePhone at ZheJiang JiaXing</p>
+]]></content>
+  </entry>
+</search>
