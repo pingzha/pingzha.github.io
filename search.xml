@@ -199,4 +199,21 @@
     <content><![CDATA[<p>2021 migrate tencent yun to mobilePhone at ZheJiang JiaXing</p>
 ]]></content>
   </entry>
+  <entry>
+    <title>jupyter_android</title>
+    <url>/2021/04/09/jupyter_android/</url>
+    <content><![CDATA[<p>install Pydroid3 and Pydroid repository plugin</p>
+<p>pip install jupyter from Pydroid3</p>
+<p>execute command in terminal:<br>jupyter notebook</p>
+<p>open http:xxx:8888 in IExplore</p>
+<p>enjoy it!</p>
+<p>You can also install pyqt5.</p>
+]]></content>
+      <categories>
+        <category>fun</category>
+      </categories>
+      <tags>
+        <tag>android python</tag>
+      </tags>
+  </entry>
 </search>
