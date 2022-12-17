@@ -7,7 +7,8 @@ categories: fun
 
 ---
 
-```install Pydroid3 and Pydroid repository plugin
+```
+install Pydroid3 and Pydroid repository plugin
 
 pip install jupyter from Pydroid3
 
