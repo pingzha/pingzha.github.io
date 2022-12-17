@@ -15,12 +15,21 @@
       name: 'welcome to pingzha的家',
       repo: 'https://github.com/pingzha/pingzha.github.io',
       coverpage: false,
-      loadNavbar: false,
+      loadNavbar: true,
       loadSidebar: true,
       maxLevel: 2,
-      subMaxLevel: 4
+      subMaxLevel: 4,
+      search: 'auto',
+      search: {
+          maxAge: 86400000,
+          paths: 'auto',
+          placeholder: 'please search',
+          noData: 'nothing found',
+          depth: 4
+      }
     }
   </script>
+  <script src="//cdn.jsdelivr.net/npm/docsify@4/lib/plugins/search.min.js"></script>
   <!-- Docsify v4 -->
   <script src="//cdn.jsdelivr.net/npm/docsify@4"></script>
 </body>
