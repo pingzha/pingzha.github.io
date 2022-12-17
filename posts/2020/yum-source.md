@@ -10,7 +10,7 @@ categories: work
 
 ## CentOS-Base.repo
 
-[extras]
+```[extras]
 gpgcheck=1
 gpgkey=http://mirrors.tencentyun.com/centos/RPM-GPG-KEY-CentOS-7
 enabled=1
@@ -27,9 +27,9 @@ gpgcheck=1
 gpgkey=http://mirrors.tencentyun.com/centos/RPM-GPG-KEY-CentOS-7
 enabled=1
 baseurl=http://mirrors.tencentyun.com/centos/$releasever/updates/$basearch/
-
+```
 ## CentOS-Epel.repo
-
+```
 [epel]
 name=EPEL for redhat/centos $releasever - $basearch
 failovermethod=priority
@@ -37,3 +37,4 @@ gpgcheck=1
 gpgkey=http://mirrors.tencentyun.com/epel/RPM-GPG-KEY-EPEL-7
 enabled=1
 baseurl=http://mirrors.tencentyun.com/epel/$releasever/$basearch/
+```

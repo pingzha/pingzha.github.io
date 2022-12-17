@@ -14,7 +14,7 @@ categories: work
 下载可执行程序，放入/usr/bin下即可
 
 启动： 
-verysync --gui-address :8886
+```verysync --gui-address :8886```
 
 打开浏览器
 http://pingzha.xyz:8886

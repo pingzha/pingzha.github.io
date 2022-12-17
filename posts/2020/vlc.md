@@ -8,16 +8,16 @@ categories: work
 
 安装 vlc-2.2.6.tar.gz
 依赖：
-qt-devel
+```qt-devel
 lua-devel
 gstreamer-devel
 gstreamer-devel1
 alsa-lib-devel
 libgcrypt-devel
 nasm
-
+```
 手动安装：
-libmad-0.15.1b.tar.gz
+```libmad-0.15.1b.tar.gz
 ./configure;make;make install
 ffmpeg-2.7.7.tar.gz
 ./configure --enable-shared;make;make install
@@ -26,6 +26,7 @@ PKG_CONFIG_PATH=/usr/local/lib/pkgconfig/ ./configure --disable-a52 --enable-run
 make;make install
 
 xhost +
+```
 因为增加了编译选型 --enable-run-as-root，可以使用root用户打开vlc
 
 使用docker启动软件
@@ -47,7 +48,7 @@ ItemChange函数中： TimeRecord(p_intf);
 ./configure --add-module=../nginx-rtmp-module
 
 在nginx.conf中增加配置：
-rtmp {
+```rtmp {
   server {
     listen 1935;
     chunk_size 4096;
@@ -57,7 +58,7 @@ rtmp {
     }
   }
 }
-
+```
 推流：
 ffmpeg -re -i /home/pxm/Wildlife.wmv -f flv rtmp://localhost:1935/live/room
 

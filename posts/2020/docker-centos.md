@@ -6,7 +6,7 @@ tags: docker
 categories: work
 ---
 
-docker login 
+```
 docker pull docker.io/simonpeng/centos:latest
 
 #/opt/start.sh
@@ -20,3 +20,4 @@ docker push docker.io/simonpeng/centos:latest
 
 docker save test > test.tar
 docker load < test.tar
+```

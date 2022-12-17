@@ -4,8 +4,10 @@ permalink: kodexplorer
 date: 2020-06-09 23:07:28
 tags: kodexplorer edit
 categories: work
+
 ---
 
+```
 #Dockerfile
 FROM  centos:7
 ENV container docker
@@ -59,19 +61,21 @@ http {
         }
     }
 }
+```
 
-################
-docker build kod -t kod:v1
-
+```docker
 docker run --privileged=true -d  -p 8001:80  --name kod  kod:v1
+```
 
-################
 将数据文件从容器中存储到磁盘上
 找到 kodexplorer目录
 拷贝该目录下的data文件夹到宿主机目录，例如 /home/pxm/kodpan
 修改配置文件，config/config.php 中，增加定义 DATA_PATH
 将修改后的容器commit，留作下次使用
 删除现有kod容器，使用新命令行启动，命令如下：
-docker run --privileged=true -d -p 8001:80 -v/home/pxm/kodpan:/usr/share/nginx/html/data  --name kod  kod:v1
+
+```docker
+
+```
 
 打开页面 pingzha.xyz:8001，即可使用
